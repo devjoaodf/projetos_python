@@ -2,6 +2,12 @@ saques_feitos = []
 limite_saques = 3
 limite_saque_individual = 500
 deposito_valor = 0
+todos_usuarios = []
+
+class Usuario:
+    def __init__(self, nome, cpf):
+        self.nome = nome
+        self.cpf = cpf
 
 def saque():
     global deposito_valor
@@ -47,32 +53,56 @@ def mostrar_menu():
       print("1. Opção saque")
       print("2. Opção deposito")
       print("3. Opção extrato")
-      print("4. Opção sair")
+      print("4. Listar todos os usuários")
+      print("5. Criar novo usuário")
+      print("6. Opção sair")
 
 def validar_saque(saqueuser):
       try:
             return int(saqueuser)
       except ValueError:
             return None
+      
+
+def listar_usuarios():
+    print("Lista de Usuários:")
+    for usuario in todos_usuarios:
+        print("Nome:", usuario.nome)
+        print("CPF:", usuario.cpf)
+        print()
+
+
+def criar_usuario():
+    nome = input("Digite o nome do novo usuário: ")
+    cpf = input("Digite o CPF do novo usuário: ")
+    for usuario in todos_usuarios:
+        if usuario.nome == nome and usuario.cpf == cpf:
+            print("Usuário já existe.")
+            return
+    todos_usuarios.append(Usuario(nome, cpf))
+    print("Usuário criado com sucesso.")
+
 
 def menu():
-      while True:
-            mostrar_menu()
-            opcao = input("Escolha uma operação: ")
+    while True:
+        mostrar_menu()
+        opcao = input("Escolha uma operação: ")
 
-            if opcao == '1':
-                  saque()
-            elif opcao == '2':
-                  deposito()
-            elif opcao == '3':
-                  extrato()
-            elif opcao == '4':
-                  exit()
-            else:
-                opcao_padrao()
+        if opcao == '1':
+            saque()
+        elif opcao == '2':
+            deposito()
+        elif opcao == '3':
+            extrato()
+        elif opcao == '4':
+            listar_usuarios()
+        elif opcao == '5':
+            criar_usuario()
+        elif opcao == '6':
+            exit()
+        else:
+            opcao_padrao()
 
 if __name__ == "__main__":
     menu()
                   
-            
-            
